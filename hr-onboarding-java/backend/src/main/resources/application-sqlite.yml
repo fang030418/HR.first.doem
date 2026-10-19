@@ -1,0 +1,21 @@
+# ============================================================
+# SQLite 数据库配置（默认 profile，开箱即跑）
+#
+# 数据文件路径说明：
+#   sqlite-jdbc 不会自动创建父目录，若配置为 ./data/hr-onboarding.db，
+#   解压后的全新项目（无 data 目录）会直接启动失败并报
+#   "Cannot create ../data/hr-onboarding.db"。
+#   因此这里把库文件直接放在工作目录（backend 根）下，无需预建目录。
+#   如需放到子目录，请先手工 mkdir 或改用 MySQL。
+# ============================================================
+spring:
+  datasource:
+    driver-class-name: org.sqlite.JDBC
+    # busy_timeout 避免并发写入时立即抛 SQLITE_BUSY
+    url: jdbc:sqlite:hr-onboarding.db?busy_timeout=5000
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/sqlite/schema.sql
+      encoding: UTF-8
+      continue-on-error: false

@@ -1,0 +1,21 @@
+# ============================================================
+# MySQL 数据库配置（profile: mysql）
+# 启动前请先建库：CREATE DATABASE hr_onboarding DEFAULT CHARSET utf8mb4;
+# 账号密码建议用环境变量注入，不要硬编码进仓库
+# ============================================================
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL:jdbc:mysql://127.0.0.1:3306/hr_onboarding?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/mysql/schema.sql
+      encoding: UTF-8
+      continue-on-error: false

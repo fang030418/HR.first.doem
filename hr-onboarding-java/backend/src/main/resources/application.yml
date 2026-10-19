@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: hr-onboarding
+  profiles:
+    # 默认使用 sqlite，开箱即跑无需外部数据库；切MySQL 用 --spring.profiles.active=mysql
+    active: sqlite
+
+  jackson:
+    default-property-inclusion: non_null
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+  global-config:
+    banner: false
+    db-config:
+      id-type: assign_id
+      table-underline: true
+
+# 生产环境务必用环境变量覆盖：export HR_JWT_SECRET='<32字节以上的随机串>'
+hr:
+  jwt:
+    secret: ${HR_JWT_SECRET:hr-onboarding-default-secret-key-change-me-2026}
+    ttl-seconds: 7200
+    remember-ttl-seconds: 604800
+  admin:
+    # 首次启动时若admin 表为空，自动初始化该账号
+    username: admin
+    password: admin123
+    display-name: 系统管理员
+
+logging:
+  level:
+    com.company.hr: info
